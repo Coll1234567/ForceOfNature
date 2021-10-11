@@ -1,0 +1,37 @@
+biomes:
+  - 'minecraft:forest'
+  - 'minecraft:wooded_hills'
+  
+seasons:
+  spring:
+    name: 'test_spring'
+    grass-color: '#7732a8'
+    foliage-color: '#0f5870'
+    water-color: '#c92c41'
+    sky-color: '#85ff93'
+    fog-color: '#ff87eb'
+    underwater-fog-color: '#996e09'
+  summer:
+    name: 'test_summer'
+    grass-color: '#7732a8'
+    foliage-color: '#0f5870'
+    water-color: '#c92c41'
+    sky-color: '#85ff93'
+    fog-color: '#ff87eb'
+    underwater-fog-color: '#996e09'
+  fall:
+    name: 'test_fall'
+    grass-color: '#7732a8'
+    foliage-color: '#0f5870'
+    water-color: '#c92c41'
+    sky-color: '#85ff93'
+    fog-color: '#ff87eb'
+    underwater-fog-color: '#996e09'
+  winter:
+    name: 'test_winter'
+    grass-color: '#7732a8'
+    foliage-color: '#0f5870'
+    water-color: '#c92c41'
+    sky-color: '#85ff93'
+    fog-color: '#ff87eb'
+    underwater-fog-color: '#996e09'
