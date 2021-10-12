@@ -13,11 +13,11 @@ import me.jishuna.forceofnature.api.event.AsyncSeasonChangeEvent;
 import net.minecraft.network.protocol.game.PacketPlayOutMapChunk;
 import net.minecraft.server.level.EntityPlayer;
 
-public class SeasonUpdateRunnable extends BukkitRunnable {
+public class TimeCheckRunnable extends BukkitRunnable {
 
 	private final SeasonManager manager;
 
-	public SeasonUpdateRunnable(SeasonManager manager) {
+	public TimeCheckRunnable(SeasonManager manager) {
 		this.manager = manager;
 	}
 
@@ -44,7 +44,7 @@ public class SeasonUpdateRunnable extends BukkitRunnable {
 		for (Chunk chunk : world.getLoadedChunks()) {
 			PacketPlayOutMapChunk newChunkPacket = new PacketPlayOutMapChunk(((CraftChunk) chunk).getHandle());
 			for (EntityPlayer ep : ((CraftWorld) world).getHandle().getPlayers()) {
-				int viewDistance = Bukkit.getServer().getViewDistance() << 4;
+				int viewDistance = (Bukkit.getServer().getViewDistance() + 3) << 4;
 				double distanceX = Math.abs(ep.locX() - (chunk.getX() << 4));
 				double distanceZ = Math.abs(ep.locZ() - (chunk.getZ() << 4));
 				if (distanceX <= viewDistance && distanceZ <= viewDistance) {

@@ -1,5 +1,5 @@
 package me.jishuna.forceofnature.api;
 
-public enum WeatherType {
+public enum PrecipitationType {
 	RAIN, SNOW, NONE;
 }
