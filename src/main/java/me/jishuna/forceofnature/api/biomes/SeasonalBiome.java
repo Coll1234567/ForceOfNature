@@ -4,7 +4,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import com.mojang.serialization.Lifecycle;
 
-import me.jishuna.forceofnature.api.WeatherType;
+import me.jishuna.forceofnature.api.PrecipitationType;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryWritable;
 import net.minecraft.resources.MinecraftKey;
@@ -15,24 +15,38 @@ import net.minecraft.world.level.biome.BiomeBase.Precipitation;
 import net.minecraft.world.level.biome.BiomeFog;
 
 public class SeasonalBiome {
+	private static final String DEFAULT = "default";
 	private int numericId;
-	private WeatherType weather;
+	private PrecipitationType weather;
 
-	public SeasonalBiome(ConfigurationSection section, IRegistryWritable<BiomeBase> biomeRegistry) {
-		BiomeBase baseBiome = biomeRegistry.fromId(0);
+	public SeasonalBiome(ConfigurationSection section, String baseBiomeKey,
+			IRegistryWritable<BiomeBase> biomeRegistry) {
+		BiomeBase baseBiome = biomeRegistry.get(new MinecraftKey(baseBiomeKey));
+
+		if (baseBiome == null)
+			return;
+		
+		BiomeFog baseFog = baseBiome.l();
 
 		MinecraftKey mcKey = new MinecraftKey("fon", section.getString("name"));
 		ResourceKey<BiomeBase> key = ResourceKey.a(IRegistry.aO, mcKey);
-
-		Integer grassColor = Integer.decode(section.getString("grass-color"));
-		Integer foliageColor = Integer.decode(section.getString("foliage-color"));
-		Integer waterColor = Integer.decode(section.getString("water-color"));
-		Integer skyColor = Integer.decode(section.getString("sky-color"));
-		Integer fogColor = Integer.decode(section.getString("fog-color"));
-		Integer underwaterFogColor = Integer.decode(section.getString("underwater-fog-color"));
+		
+		String grassColorString = section.getString("grass-color");
+		String foliageColorString = section.getString("foliage-color");
+		String waterColorString = section.getString("water-color");
+		String skyColorString = section.getString("sky-color");
+		String fogColorString = section.getString("fog-color");
+		String underwaterFogColorString = section.getString("underwater-fog-color");
+		
+		Integer grassColor = grassColorString.equalsIgnoreCase(DEFAULT) ? baseFog.f().orElse(Integer.decode("#FFFFFF")) : Integer.decode(grassColorString);
+		Integer foliageColor = foliageColorString.equalsIgnoreCase(DEFAULT) ? baseFog.e().orElse(Integer.decode("#FFFFFF")) : Integer.decode(foliageColorString);
+		Integer waterColor = waterColorString.equalsIgnoreCase(DEFAULT) ? baseFog.b() : Integer.decode(waterColorString);
+		Integer skyColor = skyColorString.equalsIgnoreCase(DEFAULT) ? baseFog.d() : Integer.decode(skyColorString);
+		Integer fogColor = fogColorString.equalsIgnoreCase(DEFAULT) ? baseFog.a() : Integer.decode(fogColorString);
+		Integer underwaterFogColor = underwaterFogColorString.equalsIgnoreCase(DEFAULT) ? baseFog.c() : Integer.decode(underwaterFogColorString);
 
 		String weatherString = section.getString("weather-type");
-		this.weather = WeatherType.valueOf(weatherString.toUpperCase());
+		this.weather = PrecipitationType.valueOf(weatherString.toUpperCase());
 		float temp;
 
 		Precipitation precip;
@@ -68,7 +82,7 @@ public class SeasonalBiome {
 		return numericId;
 	}
 
-	public WeatherType getWeather() {
+	public PrecipitationType getWeather() {
 		return weather;
 	}
 

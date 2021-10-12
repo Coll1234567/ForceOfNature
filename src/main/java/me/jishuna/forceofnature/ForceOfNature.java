@@ -42,8 +42,6 @@ public class ForceOfNature extends JavaPlugin {
 		final String path = "SeasonGroups";
 		final File jarFile = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
 
-		new SeasonUpdateRunnable(seasonManager).runTaskTimerAsynchronously(this, 0, 20);
-
 		if (jarFile.isFile()) {
 			try (final JarFile jar = new JarFile(jarFile);) {
 				final Enumeration<JarEntry> entries = jar.entries();
@@ -62,6 +60,9 @@ public class ForceOfNature extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
+
+		new TimeCheckRunnable(seasonManager).runTaskTimerAsynchronously(this, 0, 20);
+		new SnowRunnable(this).runTaskTimerAsynchronously(this, 0, 5);
 
 		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
 		manager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.MAP_CHUNK) {
@@ -86,6 +87,14 @@ public class ForceOfNature extends JavaPlugin {
 				event.setPacket(packet);
 			}
 		});
+	}
+
+	public SeasonalBiomeGroupRegistry getGroupRegistry() {
+		return groupRegistry;
+	}
+
+	public SeasonManager getSeasonManager() {
+		return seasonManager;
 	}
 
 }

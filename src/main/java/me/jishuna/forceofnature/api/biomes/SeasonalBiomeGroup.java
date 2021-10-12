@@ -16,16 +16,17 @@ public class SeasonalBiomeGroup {
 	private EnumMap<Season, SeasonalBiome> seasonMap = new EnumMap<>(Season.class);
 
 	public SeasonalBiomeGroup(ConfigurationSection section, IRegistryWritable<BiomeBase> biomeRegistry) {
+		String baseBiome = section.getString("base-biome");
 		this.targetBiomes.addAll(section.getStringList("biomes"));
 
 		this.seasonMap.put(Season.SPRING,
-				new SeasonalBiome(section.getConfigurationSection("seasons.spring"), biomeRegistry));
+				new SeasonalBiome(section.getConfigurationSection("seasons.spring"), baseBiome, biomeRegistry));
 		this.seasonMap.put(Season.SUMMER,
-				new SeasonalBiome(section.getConfigurationSection("seasons.summer"), biomeRegistry));
+				new SeasonalBiome(section.getConfigurationSection("seasons.summer"), baseBiome, biomeRegistry));
 		this.seasonMap.put(Season.FALL,
-				new SeasonalBiome(section.getConfigurationSection("seasons.fall"), biomeRegistry));
+				new SeasonalBiome(section.getConfigurationSection("seasons.fall"), baseBiome, biomeRegistry));
 		this.seasonMap.put(Season.WINTER,
-				new SeasonalBiome(section.getConfigurationSection("seasons.winter"), biomeRegistry));
+				new SeasonalBiome(section.getConfigurationSection("seasons.winter"), baseBiome, biomeRegistry));
 	}
 	
 	public SeasonalBiome getBiomeForSeason(Season season) {
