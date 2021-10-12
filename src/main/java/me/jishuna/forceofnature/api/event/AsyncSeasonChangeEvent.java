@@ -15,6 +15,7 @@ public class AsyncSeasonChangeEvent extends Event {
 	private final Season newSeason;
 
 	public AsyncSeasonChangeEvent(World world, Season oldSeason, Season newSeason) {
+		super(true);
 		this.world = world;
 		this.oldSeason = oldSeason;
 		this.newSeason = newSeason;
