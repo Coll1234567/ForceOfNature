@@ -1,7 +1,9 @@
-package me.jishuna.forceofnature;
+package me.jishuna.forceofnature.api;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import me.jishuna.forceofnature.api.biomes.SeasonalBiomeGroup;
 
 public class SeasonalBiomeGroupRegistry {
 

@@ -1,4 +1,4 @@
-package me.jishuna.forceofnature;
+package me.jishuna.forceofnature.api.biomes;
 
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
 
+import me.jishuna.forceofnature.api.Season;
 import net.minecraft.core.IRegistryWritable;
 import net.minecraft.world.level.biome.BiomeBase;
 

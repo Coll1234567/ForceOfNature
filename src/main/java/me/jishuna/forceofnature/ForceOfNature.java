@@ -19,6 +19,9 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 
 import me.jishuna.commonlib.utils.FileUtils;
+import me.jishuna.forceofnature.api.SeasonManager;
+import me.jishuna.forceofnature.api.SeasonalBiomeGroupRegistry;
+import me.jishuna.forceofnature.api.biomes.SeasonalBiomeGroup;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryWritable;
 import net.minecraft.world.level.biome.BiomeBase;
@@ -26,13 +29,20 @@ import net.minecraft.world.level.biome.BiomeBase;
 public class ForceOfNature extends JavaPlugin {
 
 	private SeasonalBiomeGroupRegistry groupRegistry;
+	private SeasonManager seasonManager;
 
+	@SuppressWarnings("resource")
+	@Override
 	public void onEnable() {
 		groupRegistry = new SeasonalBiomeGroupRegistry();
+		seasonManager = new SeasonManager();
+
 		IRegistryWritable<BiomeBase> biomeRegistry = ((CraftServer) Bukkit.getServer()).getServer().l.b(IRegistry.aO);
 
 		final String path = "SeasonGroups";
 		final File jarFile = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+
+		new SeasonUpdateRunnable(seasonManager).runTaskTimerAsynchronously(this, 0, 20);
 
 		if (jarFile.isFile()) {
 			try (final JarFile jar = new JarFile(jarFile);) {
@@ -42,7 +52,7 @@ public class ForceOfNature extends JavaPlugin {
 					if (name.startsWith(path + "/")) {
 						if (!name.endsWith(".yml"))
 							continue;
-						
+
 						FileUtils.loadResource(this, name).ifPresent(config -> {
 							this.groupRegistry.registerBiomeGroup(new SeasonalBiomeGroup(config, biomeRegistry));
 						});
@@ -69,7 +79,8 @@ public class ForceOfNature extends JavaPlugin {
 					if (group == null)
 						continue;
 
-					biomes[index] = group.getBiomeForSeason(Season.SPRING).getNumericId();
+					biomes[index] = group.getBiomeForSeason(seasonManager.getSeason(event.getPlayer().getWorld()))
+							.getNumericId();
 				}
 				packet.getIntegerArrays().writeSafely(0, biomes);
 				event.setPacket(packet);

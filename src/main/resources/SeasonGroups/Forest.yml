@@ -11,6 +11,7 @@ seasons:
     sky-color: '#85ff93'
     fog-color: '#ff87eb'
     underwater-fog-color: '#996e09'
+    weather-type: 'RAIN'
   summer:
     name: 'test_summer'
     grass-color: '#7732a8'
@@ -19,6 +20,7 @@ seasons:
     sky-color: '#85ff93'
     fog-color: '#ff87eb'
     underwater-fog-color: '#996e09'
+    weather-type: 'RAIN'
   fall:
     name: 'test_fall'
     grass-color: '#7732a8'
@@ -27,6 +29,7 @@ seasons:
     sky-color: '#85ff93'
     fog-color: '#ff87eb'
     underwater-fog-color: '#996e09'
+    weather-type: 'RAIN'
   winter:
     name: 'test_winter'
     grass-color: '#7732a8'
@@ -35,3 +38,4 @@ seasons:
     sky-color: '#85ff93'
     fog-color: '#ff87eb'
     underwater-fog-color: '#996e09'
+    weather-type: 'SNOW'
