@@ -19,7 +19,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 
 import me.jishuna.commonlib.utils.FileUtils;
-import me.jishuna.forceofnature.api.SeasonManager;
+import me.jishuna.forceofnature.api.WorldManager;
 import me.jishuna.forceofnature.api.SeasonalBiomeGroupRegistry;
 import me.jishuna.forceofnature.api.biomes.SeasonalBiomeGroup;
 import net.minecraft.core.IRegistry;
@@ -29,13 +29,13 @@ import net.minecraft.world.level.biome.BiomeBase;
 public class ForceOfNature extends JavaPlugin {
 
 	private SeasonalBiomeGroupRegistry groupRegistry;
-	private SeasonManager seasonManager;
+	private WorldManager seasonManager;
 
 	@SuppressWarnings("resource")
 	@Override
 	public void onEnable() {
 		groupRegistry = new SeasonalBiomeGroupRegistry();
-		seasonManager = new SeasonManager();
+		seasonManager = new WorldManager();
 
 		IRegistryWritable<BiomeBase> biomeRegistry = ((CraftServer) Bukkit.getServer()).getServer().l.b(IRegistry.aO);
 
@@ -61,8 +61,9 @@ public class ForceOfNature extends JavaPlugin {
 			}
 		}
 
-		new TimeCheckRunnable(seasonManager).runTaskTimerAsynchronously(this, 0, 20);
-		new SnowRunnable(this).runTaskTimerAsynchronously(this, 0, 5);
+		new TimeCheckRunnable(this).runTaskTimerAsynchronously(this, 0, 20);
+		new SnowRunnable(this).runTaskTimerAsynchronously(this, 0, 20);
+		new PlayerWeatherRunnable(groupRegistry).runTaskTimer(this, 0, 20);
 
 		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
 		manager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.MAP_CHUNK) {
@@ -93,7 +94,7 @@ public class ForceOfNature extends JavaPlugin {
 		return groupRegistry;
 	}
 
-	public SeasonManager getSeasonManager() {
+	public WorldManager getSeasonManager() {
 		return seasonManager;
 	}
 
