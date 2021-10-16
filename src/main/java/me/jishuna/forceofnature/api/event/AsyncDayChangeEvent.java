@@ -13,6 +13,7 @@ public class AsyncDayChangeEvent extends Event {
 	private final int newDay;
 
 	public AsyncDayChangeEvent(World world, int oldDay, int newDay) {
+		super(true);
 		this.world = world;
 		this.oldDay = oldDay;
 		this.newDay = newDay;
