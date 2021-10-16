@@ -42,7 +42,7 @@ public class TimeCheckRunnable extends BukkitRunnable {
 
 			data.setDay(day);
 
-			int seasonIndex = (day / 5) % 4;
+			int seasonIndex = (day / data.getSeasonLength()) % 4;
 
 			Season newSeason = Season.values()[seasonIndex];
 			Season oldSeason = data.getSeason();

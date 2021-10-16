@@ -1,7 +1,5 @@
 worlds:
   world:
     season-length: 15
-  world_nether:
-    season-length: 15
     
-debug: true
+debug: false

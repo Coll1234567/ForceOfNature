@@ -3,10 +3,12 @@ package me.jishuna.forceofnature.api;
 public class WorldData {
 	private Season season;
 	private int day;
+	private int seasonLength;
 	private final SeasonalBiomeGroupRegistry registry;
 
-	public WorldData(SeasonalBiomeGroupRegistry registry) {
+	public WorldData(SeasonalBiomeGroupRegistry registry, int seasonLength) {
 		this.registry = registry;
+		this.seasonLength = seasonLength;
 	}
 
 	public Season getSeason() {
@@ -23,6 +25,10 @@ public class WorldData {
 
 	public void setDay(int day) {
 		this.day = day;
+	}
+
+	public int getSeasonLength() {
+		return seasonLength;
 	}
 
 	public SeasonalBiomeGroupRegistry getRegistry() {

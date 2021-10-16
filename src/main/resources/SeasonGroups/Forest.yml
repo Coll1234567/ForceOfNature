@@ -66,8 +66,8 @@ seasons:
     precipitation-type: 'SNOW'
     
     weather:
-      SNOW: 9.0
-      CLEAR: 1.0
+      SNOW: 4.0
+      CLEAR: 6.0
      
     max-snow-height: 5
     snow-melts: false

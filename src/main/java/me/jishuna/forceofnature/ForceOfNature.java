@@ -112,7 +112,7 @@ public class ForceOfNature extends JavaPlugin {
 			return;
 
 		File seasonFolder = new File(worldsFolder + File.separator + worldName + File.separator + PATH);
-		
+
 		sendDebugMessage("Loading world " + worldName);
 		if (!seasonFolder.exists()) {
 			seasonFolder.mkdirs();
@@ -121,7 +121,8 @@ public class ForceOfNature extends JavaPlugin {
 			copyDefaultFiles("worlds" + File.separator + worldName);
 		}
 
-		WorldData data = new WorldData(new SeasonalBiomeGroupRegistry());
+		int length = section.getConfigurationSection(worldName).getInt("season-length", 15);
+		WorldData data = new WorldData(new SeasonalBiomeGroupRegistry(), length);
 
 		for (File file : seasonFolder.listFiles()) {
 			if (!file.getName().endsWith(".yml"))
@@ -160,7 +161,7 @@ public class ForceOfNature extends JavaPlugin {
 
 		FileUtils.loadResource(this, "config.yml").ifPresent(config -> this.configuration = config);
 	}
-	
+
 	public void sendDebugMessage(String message) {
 		if (this.configuration.getBoolean("debug", false))
 			this.getLogger().info(message);
