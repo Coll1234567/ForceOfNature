@@ -26,6 +26,7 @@ import me.jishuna.forceofnature.api.SeasonalBiomeGroupRegistry;
 import me.jishuna.forceofnature.api.WorldData;
 import me.jishuna.forceofnature.api.WorldManager;
 import me.jishuna.forceofnature.api.biomes.SeasonalBiomeGroup;
+import me.jishuna.forceofnature.listeners.LightningListener;
 import me.jishuna.forceofnature.listeners.WorldListener;
 import me.jishuna.forceofnature.runnables.PlayerWeatherRunnable;
 import me.jishuna.forceofnature.runnables.TimeCheckRunnable;
@@ -47,6 +48,7 @@ public class ForceOfNature extends JavaPlugin {
 		loadConfiguration();
 
 		Bukkit.getPluginManager().registerEvents(new WorldListener(this), this);
+		Bukkit.getPluginManager().registerEvents(new LightningListener(worldManager), this);
 
 		Bukkit.getScheduler().runTask(this, () -> {
 			for (World world : Bukkit.getWorlds())
