@@ -25,6 +25,7 @@ import me.jishuna.commonlib.utils.FileUtils;
 import me.jishuna.forceofnature.api.SeasonalBiomeGroupRegistry;
 import me.jishuna.forceofnature.api.WorldData;
 import me.jishuna.forceofnature.api.WorldManager;
+import me.jishuna.forceofnature.api.biomes.SeasonalBiome;
 import me.jishuna.forceofnature.api.biomes.SeasonalBiomeGroup;
 import me.jishuna.forceofnature.listeners.LightningListener;
 import me.jishuna.forceofnature.listeners.WorldListener;
@@ -88,7 +89,11 @@ public class ForceOfNature extends JavaPlugin {
 					if (group == null)
 						continue;
 
-					biomes[index] = group.getBiomeForSeason(data.getSeason()).getNumericId();
+					SeasonalBiome biome = group.getBiomeForSeason(data.getSeason());
+					if (biome == null)
+						continue;
+					
+					biomes[index] = biome.getNumericId();
 				}
 				packet.getIntegerArrays().writeSafely(0, biomes);
 				event.setPacket(packet);

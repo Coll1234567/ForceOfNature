@@ -34,13 +34,13 @@ public class TimeCheckRunnable extends BukkitRunnable {
 			int oldDay = data.getDay();
 			int day = (int) (world.getFullTime() / 24000);
 
-			if (oldDay == day)
-				return;
+			if (oldDay != day) {
 
-			AsyncDayChangeEvent dayEvent = new AsyncDayChangeEvent(world, oldDay, day);
-			Bukkit.getPluginManager().callEvent(dayEvent);
+				AsyncDayChangeEvent dayEvent = new AsyncDayChangeEvent(world, oldDay, day);
+				Bukkit.getPluginManager().callEvent(dayEvent);
 
-			data.setDay(day);
+				data.setDay(day);
+			}
 
 			int seasonIndex = (day / data.getSeasonLength()) % 4;
 

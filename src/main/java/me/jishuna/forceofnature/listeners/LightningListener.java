@@ -32,7 +32,7 @@ public class LightningListener implements Listener {
 
 	@EventHandler
 	public void onStrike(LightningStrikeEvent event) {
-		if (event.getCause() != Cause.WEATHER)
+		if (event.getCause() != Cause.WEATHER && event.getCause() != Cause.TRIDENT)
 			return;
 		
 		Location location = event.getLightning().getLocation();
