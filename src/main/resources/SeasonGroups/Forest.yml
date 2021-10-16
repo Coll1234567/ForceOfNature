@@ -5,7 +5,7 @@ biomes:
   
 seasons:
   spring:
-    name: 'test_spring'
+    name: 'forest_spring'
     grass-color: '#7732a8'
     foliage-color: '#0f5870'
     water-color: 'default'
@@ -15,10 +15,14 @@ seasons:
     precipitation-type: 'RAIN'
     
     weather:
-      DOWNFALL: 9.0
-      CLEAR: 1.0
+      HEAVY_RAIN: 2.0
+      RAIN: 3.0
+      CLEAR: 5.0
+      
+    snow-melts: true
+    puddle-chance: 2
   summer:
-    name: 'test_summer'
+    name: 'forest_summer'
     grass-color: '#79C05A'
     foliage-color: '#59AE30'
     water-color: 'default'
@@ -28,10 +32,14 @@ seasons:
     precipitation-type: 'RAIN'
     
     weather:
-      DOWNFALL: 9.0
-      CLEAR: 1.0
+      HEAVY_RAIN: 1.0
+      RAIN: 2.0
+      CLEAR: 7.0
+      
+    snow-melts: true
+    puddle-chance: 1
   fall:
-    name: 'test_fall'
+    name: 'forest_fall'
     grass-color: '#6B6730'
     foliage-color: '#825617'
     water-color: 'default'
@@ -41,10 +49,14 @@ seasons:
     precipitation-type: 'RAIN'
     
     weather:
-      DOWNFALL: 9.0
-      CLEAR: 1.0
+      HEAVY_RAIN: 1.0
+      RAIN: 2.0
+      CLEAR: 7.0
+      
+    snow-melts: true
+    puddle-chance: 1
   winter:
-    name: 'test_winter'
+    name: 'forest_winter'
     grass-color: '#80B497'
     foliage-color: '#60A17B'
     water-color: 'default'
@@ -54,5 +66,9 @@ seasons:
     precipitation-type: 'SNOW'
     
     weather:
-      DOWNFALL: 9.0
+      SNOW: 9.0
       CLEAR: 1.0
+     
+    max-snow-height: 5
+    snow-melts: false
+    freeze-chance: 2

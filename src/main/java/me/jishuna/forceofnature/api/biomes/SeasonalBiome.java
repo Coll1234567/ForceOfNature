@@ -1,5 +1,6 @@
 package me.jishuna.forceofnature.api.biomes;
 
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.mojang.serialization.Lifecycle;
@@ -22,16 +23,20 @@ public class SeasonalBiome {
 	private WeightedRandom<WeatherType> weatherTypes = new WeightedRandom<>();
 
 	private int numericId;
-	private PrecipitationType weather;
+	private PrecipitationType precipitation;
+
 	private int maxSnowHeight;
 	private int freezeChance;
-	private int meltChance;
+	private int puddleChance;
 
-	public SeasonalBiome(ConfigurationSection section, String baseBiomeKey,
+	private boolean snowMelts;
+
+	public SeasonalBiome(World world, ConfigurationSection section, String baseBiomeKey,
 			IRegistryWritable<BiomeBase> biomeRegistry) {
 		this.maxSnowHeight = section.getInt("max-snow-height", 5);
-		this.freezeChance = section.getInt("freeze-chance", 5);
-		this.meltChance = section.getInt("melt-chance", 100);
+		this.freezeChance = section.getInt("freeze-chance", 2);
+		this.puddleChance = section.getInt("puddle-chance", 1);
+		this.snowMelts = section.getBoolean("snow-melts", true);
 
 		ConfigurationSection weathersection = section.getConfigurationSection("weather");
 		if (weathersection != null) {
@@ -48,7 +53,7 @@ public class SeasonalBiome {
 
 		BiomeFog baseFog = baseBiome.l();
 
-		MinecraftKey mcKey = new MinecraftKey("fon", section.getString("name"));
+		MinecraftKey mcKey = new MinecraftKey("fon", world.getName() + "." + section.getString("name"));
 		ResourceKey<BiomeBase> key = ResourceKey.a(IRegistry.aO, mcKey);
 
 		String grassColorString = section.getString("grass-color");
@@ -71,12 +76,12 @@ public class SeasonalBiome {
 				: Integer.decode(underwaterFogColorString);
 
 		String weatherString = section.getString("precipitation-type");
-		this.weather = PrecipitationType.valueOf(weatherString.toUpperCase());
+		this.precipitation = PrecipitationType.valueOf(weatherString.toUpperCase());
 		float temp;
 
 		Precipitation precip;
 
-		switch (this.weather) {
+		switch (this.precipitation) {
 		case NONE:
 		default:
 			precip = Precipitation.a;
@@ -101,7 +106,7 @@ public class SeasonalBiome {
 		biomeRegistry.a(key, biome, Lifecycle.experimental());
 		this.numericId = biomeRegistry.getId(biome);
 	}
-	
+
 	public WeatherType getRandomWeather() {
 		return this.weatherTypes.poll();
 	}
@@ -110,8 +115,8 @@ public class SeasonalBiome {
 		return numericId;
 	}
 
-	public PrecipitationType getWeather() {
-		return weather;
+	public PrecipitationType getPrecipitationType() {
+		return precipitation;
 	}
 
 	public int getMaxSnowHeight() {
@@ -122,8 +127,12 @@ public class SeasonalBiome {
 		return freezeChance;
 	}
 
-	public int getMeltChance() {
-		return meltChance;
+	public int getPuddleChance() {
+		return puddleChance;
+	}
+
+	public boolean snowMelts() {
+		return snowMelts;
 	}
 
 }

@@ -1,4 +1,4 @@
-package me.jishuna.forceofnature;
+package me.jishuna.forceofnature.runnables;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +12,9 @@ import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.jishuna.forceofnature.api.SeasonalBiomeGroupRegistry;
 import me.jishuna.forceofnature.api.WeatherType;
+import me.jishuna.forceofnature.api.WorldData;
+import me.jishuna.forceofnature.api.WorldManager;
 import me.jishuna.forceofnature.api.biomes.SeasonalBiomeGroup;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryWritable;
@@ -25,22 +26,27 @@ public class PlayerWeatherRunnable extends BukkitRunnable {
 			.b(IRegistry.aO);
 
 	private final Map<UUID, WeatherType> typeMap = new HashMap<>();
-	private final SeasonalBiomeGroupRegistry groupRegistry;
+	private final WorldManager manager;
 
-	public PlayerWeatherRunnable(SeasonalBiomeGroupRegistry groupRegistry) {
-		this.groupRegistry = groupRegistry;
+	public PlayerWeatherRunnable(WorldManager manager) {
+		this.manager = manager;
 	}
 
 	@Override
 	public void run() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
+			WorldData data = manager.getWorldData(player.getWorld());
+
+			if (data == null)
+				return;
+
 			Location loc = player.getLocation();
 
 			WorldServer serverWorld = ((CraftWorld) player.getWorld()).getHandle();
 			BiomeBase biome = serverWorld.getBiome(loc.getBlockX() >> 2, loc.getBlockY(), loc.getBlockZ() >> 2);
 			String key = BIOME_REGISTRY.getKey(biome).toString();
 
-			SeasonalBiomeGroup group = groupRegistry.getBiomeGroup(key);
+			SeasonalBiomeGroup group = data.getRegistry().getBiomeGroup(key);
 
 			if (group == null) {
 				if (this.typeMap.get(player.getUniqueId()) != null) {
@@ -60,7 +66,7 @@ public class PlayerWeatherRunnable extends BukkitRunnable {
 			if (prev != type) {
 				this.typeMap.put(player.getUniqueId(), type);
 
-				if (type == WeatherType.DOWNFALL) {
+				if (type.hasDownfall()) {
 					player.setPlayerWeather(org.bukkit.WeatherType.DOWNFALL);
 				} else {
 					player.setPlayerWeather(org.bukkit.WeatherType.CLEAR);

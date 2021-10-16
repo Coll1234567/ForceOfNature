@@ -20,11 +20,10 @@ public class SeasonalBiomeGroupRegistry {
 	public SeasonalBiomeGroup getBiomeGroup(String key) {
 		return this.groupMap.get(key);
 	}
-	
+
 	public void onNewDay(Season season) {
 		for (SeasonalBiomeGroup group : this.groups) {
 			group.generateWeather(season);
 		}
 	}
-
 }
