@@ -33,19 +33,18 @@ public class TimeCheckRunnable extends BukkitRunnable {
 				return;
 			int oldDay = data.getDay();
 			int day = (int) (world.getFullTime() / 24000);
-
-			if (oldDay != day) {
-
-				AsyncDayChangeEvent dayEvent = new AsyncDayChangeEvent(world, oldDay, day);
-				Bukkit.getPluginManager().callEvent(dayEvent);
-
-				data.setDay(day);
-			}
-
-			int seasonIndex = (day / data.getSeasonLength()) % 4;
-
-			Season newSeason = Season.values()[seasonIndex];
 			Season oldSeason = data.getSeason();
+
+			if (oldDay == day && oldSeason != null)
+				return;
+
+			AsyncDayChangeEvent dayEvent = new AsyncDayChangeEvent(world, oldDay, day);
+			Bukkit.getPluginManager().callEvent(dayEvent);
+
+			data.setDay(day);
+			
+			int seasonIndex = (day / data.getSeasonLength()) % 4;
+			Season newSeason = Season.values()[seasonIndex];
 
 			if (newSeason != oldSeason) {
 				AsyncSeasonChangeEvent seasonEvent = new AsyncSeasonChangeEvent(world, oldSeason, newSeason);
