@@ -26,17 +26,26 @@ public class SeasonalBiome {
 	private PrecipitationType precipitation;
 
 	private int maxSnowHeight;
-	private int freezeChance;
+	private int snowChance;
+	private int iceChance;
 	private int puddleChance;
-
-	private boolean snowMelts;
+	private float temperature;
 
 	public SeasonalBiome(World world, ConfigurationSection section, String baseBiomeKey,
 			IRegistryWritable<BiomeBase> biomeRegistry) {
+
+		BiomeBase baseBiome = biomeRegistry.get(new MinecraftKey(baseBiomeKey));
+
+		if (baseBiome == null)
+			return;
+		
 		this.maxSnowHeight = section.getInt("max-snow-height", 5);
-		this.freezeChance = section.getInt("freeze-chance", 2);
+		this.iceChance = section.getInt("ice-chance", 5);
+		this.snowChance = section.getInt("snow-chance", 2);
 		this.puddleChance = section.getInt("puddle-chance", 1);
-		this.snowMelts = section.getBoolean("snow-melts", true);
+		
+		String tempString = section.getString("temperature");
+		this.temperature = tempString.equalsIgnoreCase(DEFAULT) ? baseBiome.k() : Float.parseFloat(tempString);
 
 		ConfigurationSection weathersection = section.getConfigurationSection("weather");
 		if (weathersection != null) {
@@ -45,11 +54,6 @@ public class SeasonalBiome {
 				this.weatherTypes.add(weathersection.getDouble(key, 1.0d), type);
 			}
 		}
-
-		BiomeBase baseBiome = biomeRegistry.get(new MinecraftKey(baseBiomeKey));
-
-		if (baseBiome == null)
-			return;
 
 		BiomeFog baseFog = baseBiome.l();
 
@@ -77,7 +81,6 @@ public class SeasonalBiome {
 
 		String weatherString = section.getString("precipitation-type");
 		this.precipitation = PrecipitationType.valueOf(weatherString.toUpperCase());
-		float temp;
 
 		Precipitation precip;
 
@@ -85,14 +88,11 @@ public class SeasonalBiome {
 		case NONE:
 		default:
 			precip = Precipitation.a;
-			temp = 2.0f;
 			break;
 		case RAIN:
-			temp = 0.9f;
 			precip = Precipitation.b;
 			break;
 		case SNOW:
-			temp = 0.0f;
 			precip = Precipitation.c;
 			break;
 		}
@@ -100,7 +100,7 @@ public class SeasonalBiome {
 		BiomeFog fog = new BiomeFog.a().a(fogColor).b(waterColor).c(underwaterFogColor).d(skyColor).e(foliageColor)
 				.f(grassColor).a();
 
-		BiomeBase biome = new BiomeBase.a().a(precip).a(0.0f).b(0.0f).c(temp).d(0.0f).a(Geography.a).a(baseBiome.b())
+		BiomeBase biome = new BiomeBase.a().a(precip).a(0.0f).b(0.0f).c(this.temperature).d(0.0f).a(Geography.a).a(baseBiome.b())
 				.a(baseBiome.e()).a(fog).a();
 
 		biomeRegistry.a(key, biome, Lifecycle.experimental());
@@ -123,16 +123,28 @@ public class SeasonalBiome {
 		return maxSnowHeight;
 	}
 
-	public int getFreezeChance() {
-		return freezeChance;
-	}
-
 	public int getPuddleChance() {
 		return puddleChance;
 	}
 
-	public boolean snowMelts() {
-		return snowMelts;
+	public static String getDefault() {
+		return DEFAULT;
+	}
+
+	public WeightedRandom<WeatherType> getWeatherTypes() {
+		return weatherTypes;
+	}
+
+	public int getSnowChance() {
+		return snowChance;
+	}
+
+	public int getIceChance() {
+		return iceChance;
+	}
+
+	public float getTemperature() {
+		return temperature;
 	}
 
 }

@@ -1,5 +1,7 @@
 package me.jishuna.forceofnature.runnables;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -8,9 +10,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.HeightMap;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Levelled;
+import org.bukkit.block.data.type.Snow;
 import org.bukkit.craftbukkit.v1_17_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -31,6 +36,10 @@ import net.minecraft.world.level.biome.BiomeBase;
 public class WeatherRunnable extends BukkitRunnable {
 	private static final IRegistryWritable<BiomeBase> BIOME_REGISTRY = ((CraftServer) Bukkit.getServer()).getServer().l
 			.b(IRegistry.aO);
+
+	private static final BlockData AIR = Material.AIR.createBlockData();
+	private static final BlockData ICE = Material.ICE.createBlockData();
+	private static final BlockData WATER = Material.WATER.createBlockData();
 
 	private static final SnowWeather SNOW_WEATHER = new SnowWeather();
 	private static final HeavyRainWeather HEAVY_RAIN_WEATHER = new HeavyRainWeather();
@@ -80,6 +89,7 @@ public class WeatherRunnable extends BukkitRunnable {
 				int x = chunk.getX() * 16 + random.nextInt(16);
 				int z = chunk.getZ() * 16 + random.nextInt(16);
 				int y = world.getHighestBlockYAt(x, z, HeightMap.MOTION_BLOCKING);
+				int y2 = world.getHighestBlockYAt(x, z, HeightMap.MOTION_BLOCKING_NO_LEAVES);
 
 				BiomeBase biome = serverWorld.getBiome(x >> 2, y, z >> 2);
 				String key = BIOME_REGISTRY.getKey(biome).toString();
@@ -94,38 +104,89 @@ public class WeatherRunnable extends BukkitRunnable {
 				if (seasonalBiome == null)
 					continue;
 
-				WeatherType type = group.getWeather();
-				Block blockA = world.getBlockAt(x, y, z);
-				Block blockB = world.getBlockAt(x, y + 1, z);
+				Block blockA = world.getBlockAt(x, y + 1, z);
+				Block blockB = world.getBlockAt(x, y, z);
+				Block blockC = world.getBlockAt(x, y2 + 1, z);
 
-				for (Block block : new Block[] { blockA, blockB }) {
-					processWeather(serverWorld, block, chunk, type, seasonalBiome);
+				if (seasonalBiome.getTemperature() <= 0.15f) {
+					freezeBlocks(blockB, seasonalBiome);
+				} else {
+					thawBlocks(blockA, blockB, seasonalBiome);
 				}
+
+				WeatherType type = group.getWeather();
+				processWeather(serverWorld, blockA, chunk, type, seasonalBiome);
+				processWeather(serverWorld, blockB, chunk, type, seasonalBiome);
+
+				if (blockC.getY() != blockA.getY())
+					processWeather(serverWorld, blockC, chunk, type, seasonalBiome);
 			}
 		}
 		this.toCheck.lazySet(Math.max(10, this.blockQueue.size() / 5));
+	}
+
+	private void freezeBlocks(Block block, SeasonalBiome biome) {
+		if (random.nextInt(100) >= biome.getIceChance())
+			return;
+
+		if (block.getType() == Material.WATER) {
+			Levelled levelled = (Levelled) block.getBlockData();
+
+			if (levelled.getLevel() == 0)
+				this.blockQueue.add(new PlacementData(block, ICE));
+		}
+	}
+
+	private void thawBlocks(Block blockA, Block blockB, SeasonalBiome biome) {
+		if (blockB.getType() == Material.ICE) {
+			this.blockQueue.add(new PlacementData(blockB, WATER));
+		}
+
+		World world = blockA.getWorld();
+		int x = blockA.getX();
+		int z = blockA.getZ();
+		int y2 = world.getHighestBlockYAt(x, z, HeightMap.MOTION_BLOCKING_NO_LEAVES);
+		Block blockC = world.getBlockAt(x, y2 + 1, z);
+
+		List<Block> blocks = new ArrayList<>();
+		blocks.add(blockA);
+		if (blockC.getY() != blockA.getY())
+			blocks.add(blockC);
+
+		for (Block block : blocks) {
+			if (block.getType() == Material.SNOW) {
+				Snow snow = (Snow) block.getBlockData();
+				int layers = snow.getLayers();
+
+				if (layers > 1) {
+					snow.setLayers(snow.getLayers() - 1);
+					this.blockQueue.add(new PlacementData(block, snow));
+				} else {
+					this.blockQueue.add(new PlacementData(block, AIR));
+				}
+			}
+		}
 	}
 
 	private void processWeather(WorldServer serverWorld, Block block, Chunk chunk, WeatherType type,
 			SeasonalBiome seasonalBiome) {
 
 		if (type == WeatherType.SNOW) {
-			handleActiveWeather(SNOW_WEATHER, serverWorld, block, chunk, type, seasonalBiome);
+			handleActiveWeather(SNOW_WEATHER, serverWorld, block, chunk, seasonalBiome);
 		} else {
-			handleInactiveWeather(SNOW_WEATHER, serverWorld, block, chunk, type, seasonalBiome);
+			handleInactiveWeather(SNOW_WEATHER, serverWorld, block, chunk, seasonalBiome);
 		}
 
 		if (type == WeatherType.HEAVY_RAIN) {
-			handleActiveWeather(HEAVY_RAIN_WEATHER, serverWorld, block, chunk, type, seasonalBiome);
+			handleActiveWeather(HEAVY_RAIN_WEATHER, serverWorld, block, chunk, seasonalBiome);
 		} else {
-			handleInactiveWeather(HEAVY_RAIN_WEATHER, serverWorld, block, chunk, type, seasonalBiome);
+			handleInactiveWeather(HEAVY_RAIN_WEATHER, serverWorld, block, chunk, seasonalBiome);
 		}
 	}
 
 	private void handleActiveWeather(Weather weather, WorldServer serverWorld, Block block, Chunk chunk,
-			WeatherType type, SeasonalBiome seasonalBiome) {
-		BlockData blockData = weather.handleActive(serverWorld, chunk, block, seasonalBiome,
-				seasonalBiome.getPrecipitationType(), random);
+			SeasonalBiome seasonalBiome) {
+		BlockData blockData = weather.handleActive(serverWorld, chunk, block, seasonalBiome, random);
 
 		if (blockData != null) {
 			this.blockQueue.add(new PlacementData(block, blockData));
@@ -133,9 +194,8 @@ public class WeatherRunnable extends BukkitRunnable {
 	}
 
 	private void handleInactiveWeather(Weather weather, WorldServer serverWorld, Block block, Chunk chunk,
-			WeatherType type, SeasonalBiome seasonalBiome) {
-		BlockData blockData = weather.handleInactive(serverWorld, chunk, block, seasonalBiome,
-				seasonalBiome.getPrecipitationType(), random);
+			SeasonalBiome seasonalBiome) {
+		BlockData blockData = weather.handleInactive(serverWorld, chunk, block, seasonalBiome, random);
 
 		if (blockData != null) {
 			this.blockQueue.add(new PlacementData(block, blockData));

@@ -12,6 +12,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: 'default'
     precipitation-type: 'RAIN'
     
     weather:
@@ -29,6 +30,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: 'default'
     precipitation-type: 'RAIN'
     
     weather:
@@ -46,6 +48,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: 'default'
     precipitation-type: 'RAIN'
     
     weather:
@@ -63,6 +66,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: 'default'
     precipitation-type: 'SNOW'
     
     weather:

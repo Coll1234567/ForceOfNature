@@ -9,7 +9,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 
-import me.jishuna.forceofnature.api.PrecipitationType;
 import me.jishuna.forceofnature.api.biomes.SeasonalBiome;
 import net.minecraft.server.level.WorldServer;
 
@@ -21,8 +20,7 @@ public class HeavyRainWeather extends Weather {
 		((Levelled) WATER).setLevel(7);
 	}
 
-	public BlockData handleActive(WorldServer world, Chunk chunk, Block block, SeasonalBiome biome,
-			PrecipitationType type, Random random) {
+	public BlockData handleActive(WorldServer world, Chunk chunk, Block block, SeasonalBiome biome, Random random) {
 		if (random.nextInt(100) >= biome.getPuddleChance())
 			return null;
 
@@ -34,8 +32,7 @@ public class HeavyRainWeather extends Weather {
 		return null;
 	}
 
-	public BlockData handleInactive(WorldServer world, Chunk chunk, Block block, SeasonalBiome biome,
-			PrecipitationType type, Random random) {
+	public BlockData handleInactive(WorldServer world, Chunk chunk, Block block, SeasonalBiome biome, Random random) {
 
 		Material material = block.getType();
 

@@ -12,6 +12,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: 'default'
     precipitation-type: 'RAIN'
     
     weather:
@@ -19,7 +20,8 @@ seasons:
       RAIN: 3.0
       CLEAR: 5.0
       
-    snow-melts: true
+    ice-chance: 15
+    snow-chance: 2
     puddle-chance: 2
   summer:
     name: 'forest_summer'
@@ -29,6 +31,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: 'default'
     precipitation-type: 'RAIN'
     
     weather:
@@ -36,7 +39,8 @@ seasons:
       RAIN: 2.0
       CLEAR: 7.0
       
-    snow-melts: true
+    ice-chance: 15
+    snow-chance: 2
     puddle-chance: 1
   fall:
     name: 'forest_fall'
@@ -46,6 +50,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: 'default'
     precipitation-type: 'RAIN'
     
     weather:
@@ -53,7 +58,8 @@ seasons:
       RAIN: 2.0
       CLEAR: 7.0
       
-    snow-melts: true
+    ice-chance: 15
+    snow-chance: 2
     puddle-chance: 1
   winter:
     name: 'forest_winter'
@@ -63,6 +69,7 @@ seasons:
     sky-color: 'default'
     fog-color: 'default'
     underwater-fog-color: 'default'
+    temperature: '0.0'
     precipitation-type: 'SNOW'
     
     weather:
@@ -70,5 +77,6 @@ seasons:
       CLEAR: 6.0
      
     max-snow-height: 5
-    snow-melts: false
-    freeze-chance: 2
+    ice-chance: 15
+    snow-chance: 2
+    puddle-chance: 1
