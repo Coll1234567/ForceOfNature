@@ -20,7 +20,7 @@ public class PlayerTickRunnable extends BukkitRunnable {
 	@Override
 	public void run() {
 		this.tick = (tick + 1) % 60;
-		for (FONModule<?, ?> module : this.moduleRegistry.getModules()) {
+		for (FONModule<?> module : this.moduleRegistry.getModules()) {
 			module.tick(tick, this.playerManager);
 		}
 	}

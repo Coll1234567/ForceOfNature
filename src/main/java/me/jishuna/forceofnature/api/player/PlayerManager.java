@@ -3,10 +3,10 @@ package me.jishuna.forceofnature.api.player;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
@@ -20,7 +20,7 @@ import me.jishuna.forceofnature.api.module.FONModule;
 public class PlayerManager {
 
 	private final ForceOfNature plugin;
-	private final Map<UUID, SurvivalPlayer> players = new HashMap<>();
+	private final Map<UUID, SurvivalPlayer> players = new ConcurrentHashMap<>();
 
 	public PlayerManager(ForceOfNature plugin) {
 		this.plugin = plugin;
@@ -36,7 +36,7 @@ public class PlayerManager {
 
 	public void createPlayer(Player player) {
 		UUID id = player.getUniqueId();
-		File dataFile = new File(this.plugin.getDataFolder() + Config.PLAYER_DATA_PATH, id.toString() + ".yml");
+		File dataFile = new File(this.plugin.getDataFolder() + Config.playerDataPath, id.toString() + ".yml");
 		if (!dataFile.exists()) {
 			try {
 				dataFile.getParentFile().mkdirs();
@@ -49,7 +49,7 @@ public class PlayerManager {
 		SurvivalPlayer survivalPlayer = new SurvivalPlayer(player, this.plugin);
 
 		JsonObject json = GsonHandler.readFromFile(dataFile);
-		for (FONModule<?, ?> module : this.plugin.getModuleRegistry().getModules()) {
+		for (FONModule<?> module : this.plugin.getModuleRegistry().getModules()) {
 			if (module.getConfig().isEnabled()) {
 				survivalPlayer.addExtension(module.createExtension(json));
 			}

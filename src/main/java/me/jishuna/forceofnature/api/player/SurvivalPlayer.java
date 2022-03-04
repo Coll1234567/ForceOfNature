@@ -18,21 +18,21 @@ public class SurvivalPlayer {
 
 	private final Player player;
 	private final ForceOfNature plugin;
-	private final Map<Class<? extends PlayerExtension<?>>, PlayerExtension<?>> extensions = new HashMap<>();
+
+	@SuppressWarnings("rawtypes")
+	private final Map<Class<? extends PlayerExtension>, PlayerExtension> extensions = new HashMap<>();
 
 	public SurvivalPlayer(Player player, ForceOfNature plugin) {
 		this.player = player;
 		this.plugin = plugin;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addExtension(PlayerExtension<?> extension) {
-		this.extensions.put((Class<? extends PlayerExtension<?>>) extension.getClass(), extension);
+		this.extensions.put(extension.getClass(), extension);
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T extends PlayerExtension<?>> Optional<T> getExtension(Class<T> type) {
-		return (Optional<T>) Optional.ofNullable(this.extensions.get(type));
+		return Optional.ofNullable(this.extensions.get(type));
 	}
 
 	public void save() {
@@ -40,7 +40,7 @@ public class SurvivalPlayer {
 
 		this.extensions.values().forEach(extension -> extension.save(json));
 
-		File dataFile = new File(plugin.getDataFolder() + Config.PLAYER_DATA_PATH,
+		File dataFile = new File(plugin.getDataFolder() + Config.playerDataPath,
 				this.player.getUniqueId().toString() + ".yml");
 		GsonHandler.writeToFile(dataFile, json);
 	}

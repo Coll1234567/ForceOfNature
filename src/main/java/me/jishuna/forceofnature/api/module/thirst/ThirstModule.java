@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.gson.JsonObject;
 
@@ -32,8 +33,9 @@ import me.jishuna.forceofnature.api.player.SurvivalPlayer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class ThirstModule extends FONModule<ThirstConfig, ThirstExtension> {
+public class ThirstModule extends FONModule<ThirstConfig> {
 	public static final String NAME = "thirst";
+	public static final NamespacedKey KEY = new NamespacedKey(JavaPlugin.getPlugin(ForceOfNature.class), NAME);
 
 	private List<FurnaceRecipe> recipes;
 
@@ -93,9 +95,8 @@ public class ThirstModule extends FONModule<ThirstConfig, ThirstExtension> {
 
 		int thirst = container.get(PluginKeys.THIRST, PersistentDataType.INTEGER);
 
-		getSurvivalPlayer(event.getPlayer()).ifPresent(player -> {
-			player.getExtension(ThirstExtension.class).ifPresent(extension -> extension.giveThirst(thirst));
-		});
+		getSurvivalPlayer(event.getPlayer()).ifPresent(player -> player.getExtension(ThirstExtension.class)
+				.ifPresent(extension -> extension.giveThirst(thirst)));
 	}
 
 	private void onInteract(PlayerInteractEvent event) {
@@ -126,9 +127,14 @@ public class ThirstModule extends FONModule<ThirstConfig, ThirstExtension> {
 	}
 
 	@Override
+	public NamespacedKey getKey() {
+		return KEY;
+	}
+
+	@Override
 	public ThirstExtension createExtension(JsonObject json) {
 		ThirstExtension extension = GsonHandler.deserialize(json.get(NAME), ThirstExtension.class,
-				() -> new ThirstExtension());
+				ThirstExtension::new);
 
 		extension.setConfig(this.getConfig());
 

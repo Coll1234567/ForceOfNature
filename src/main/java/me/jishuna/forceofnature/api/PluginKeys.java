@@ -7,7 +7,7 @@ import me.jishuna.forceofnature.ForceOfNature;
 
 public class PluginKeys {
 	
-	public static NamespacedKey THIRST = makeKey("thirst");
+	public static final NamespacedKey THIRST = makeKey("thirst");
 
 	private static NamespacedKey makeKey(String name) {
 		return new NamespacedKey(JavaPlugin.getPlugin(ForceOfNature.class), name);

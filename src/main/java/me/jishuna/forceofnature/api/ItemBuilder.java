@@ -1,6 +1,7 @@
 package me.jishuna.forceofnature.api;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Color;
@@ -71,8 +72,7 @@ public class ItemBuilder {
 
 	public ItemBuilder lore(String... lore) {
 		List<String> itemLore = getLore();
-		for (String loreLine : lore)
-			itemLore.add(loreLine);
+		itemLore.addAll(Arrays.asList(lore));
 
 		meta.setLore(itemLore);
 

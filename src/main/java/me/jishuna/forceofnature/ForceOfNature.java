@@ -19,7 +19,7 @@ public class ForceOfNature extends JavaPlugin {
 		this.moduleRegistry = new ModuleRegistry(this);
 		this.playerManager = new PlayerManager(this);
 
-		Bukkit.getPluginManager().registerEvents(new PlayerListener(playerManager), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
 		new PlayerTickRunnable(this).runTaskTimer(this, 0, 1);
 	}

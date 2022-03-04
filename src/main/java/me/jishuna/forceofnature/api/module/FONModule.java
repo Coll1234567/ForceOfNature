@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
@@ -17,14 +18,14 @@ import me.jishuna.forceofnature.api.event.EventWrapper;
 import me.jishuna.forceofnature.api.player.PlayerManager;
 import me.jishuna.forceofnature.api.player.SurvivalPlayer;
 
-public abstract class FONModule<T extends ExtensionConfig, U extends PlayerExtension<?>> {
+public abstract class FONModule<T extends ExtensionConfig> {
 
 	private final Table<Class<? extends Event>, EventPriority, EventWrapper<? extends Event>> eventTable = HashBasedTable
 			.create();
 	private final ForceOfNature plugin;
 	private final T config;
 
-	public FONModule(ForceOfNature plugin, T config) {
+	protected FONModule(ForceOfNature plugin, T config) {
 		this.plugin = plugin;
 		this.config = config;
 		
@@ -38,7 +39,10 @@ public abstract class FONModule<T extends ExtensionConfig, U extends PlayerExten
 	public void tick(int tick, PlayerManager manager) {
 	}
 
-	public abstract U createExtension(JsonObject json);
+	@SuppressWarnings("rawtypes")
+	public abstract PlayerExtension createExtension(JsonObject json);
+	
+	public abstract NamespacedKey getKey();
 
 	public <E extends Event> void handleEvent(Class<E> eventClass, EventPriority priority, E event) {
 		this.getEventHandler(eventClass, priority).ifPresent(handler -> handler.consume(event));
@@ -53,7 +57,7 @@ public abstract class FONModule<T extends ExtensionConfig, U extends PlayerExten
 		this.eventTable.put(type, priority, new EventWrapper<>(type, consumer));
 	}
 
-	public <E extends Event> Optional<EventWrapper<? extends Event>> getEventHandler(Class<E> type,
+	public <E extends Event> Optional<EventWrapper<?>> getEventHandler(Class<E> type,
 			EventPriority priority) {
 		return Optional.ofNullable(this.eventTable.get(type, priority));
 	}
