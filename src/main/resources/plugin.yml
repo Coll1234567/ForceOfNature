@@ -2,5 +2,4 @@ name: ForceOfNature
 version: @version@
 main: me.jishuna.forceofnature.ForceOfNature
 authors: [Jishuna]
-api-version: 1.17
-depend: [ProtocolLib]
+api-version: 1.18

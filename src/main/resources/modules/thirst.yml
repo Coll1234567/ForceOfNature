@@ -1,0 +1,34 @@
+enabled: true
+
+salt-water:
+  thirst: -10
+  sickness-chance: 33
+  name: '&fBottle of Salt Water'
+  color: '112,159,255'
+  lore: '&7Thirst: &c-10'
+fresh-water:
+  thirst: 25
+  sickness-chance: 33
+  name: '&fBottle of Fresh Water'
+  color: '63,118,228'
+  lore: '&7Thirst: &a25'
+purified-water:
+  thirst: 30
+  sickness-chance: 0
+  name: '&fBottle of Purified Water'
+  color: '69,173,242'
+  lore: '&7Thirst: &a30'
+
+salt-water-biomes:
+  - 'minecraft:ocean'
+  - 'minecraft:cold_ocean'
+  - 'minecraft:frozen_ocean'
+  - 'minecraft:lukewarm_ocean'
+  - 'minecraft:warm_ocean'
+  - 'minecraft:deep_ocean'
+  - 'minecraft:deep_cold_ocean'
+  - 'minecraft:deep_frozen_ocean'
+  - 'minecraft:deep_lukewarm_ocean'
+  - 'minecraft:beach'
+  - 'minecraft:snowy_beach'
+  - 'minecraft:stony_shore'
