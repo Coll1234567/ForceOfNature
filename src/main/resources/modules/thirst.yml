@@ -10,6 +10,7 @@ salt-water:
     - '&7may make you sick.'
     - '&8&oYou should boil this in a'
     - '&8&ofurnace before drinking it.'
+
 fresh-water:
   thirst: 2
   sickness-chance: 33
@@ -20,6 +21,7 @@ fresh-water:
     - '&7may make you sick.'
     - '&8&oYou should boil this in a'
     - '&8&ofurnace before drinking it.'
+
 purified-water:
   thirst: 3
   sickness-chance: 0

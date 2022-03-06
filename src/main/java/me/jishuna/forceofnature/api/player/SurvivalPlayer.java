@@ -19,6 +19,7 @@ public class SurvivalPlayer {
 	private final Player player;
 	private final ForceOfNature plugin;
 
+	@SuppressWarnings("rawtypes")
 	private final Map<Class<? extends PlayerExtension>, PlayerExtension<?>> extensions = new HashMap<>();
 
 	public SurvivalPlayer(Player player, ForceOfNature plugin) {

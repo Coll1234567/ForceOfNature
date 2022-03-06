@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionData;
 
 public class ItemBuilder {
 
@@ -140,6 +141,14 @@ public class ItemBuilder {
 			return this;
 
 		((PotionMeta) this.meta).setColor(Color.fromRGB(red, green, blue));
+		return this;
+	}
+	
+	public ItemBuilder potionData(PotionData data) {
+		if (!(this.meta instanceof PotionMeta))
+			return this;
+
+		((PotionMeta) this.meta).setBasePotionData(data);
 		return this;
 	}
 

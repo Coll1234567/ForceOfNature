@@ -11,6 +11,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 import me.jishuna.forceofnature.ForceOfNature;
 import me.jishuna.forceofnature.api.FileUtils;
@@ -56,6 +58,7 @@ public class ThirstConfig extends ExtensionConfig {
 
 	private ItemStack makeWaterItem(ConfigurationSection section, int defThirst, int defSick) {
 		return new ItemBuilder(Material.POTION).flags(ItemFlag.HIDE_POTION_EFFECTS)
+				.potionData(new PotionData(PotionType.WATER))
 				.potionColor(section.getString("color"))
 				.persistantData(PluginKeys.THIRST, PersistentDataType.INTEGER, section.getInt("thirst", defThirst))
 				.persistantData(PluginKeys.SICK_CHANCE, PersistentDataType.FLOAT,
