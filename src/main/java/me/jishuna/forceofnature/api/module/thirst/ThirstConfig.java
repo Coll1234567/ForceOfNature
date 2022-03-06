@@ -1,6 +1,8 @@
 package me.jishuna.forceofnature.api.module.thirst;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -24,6 +26,7 @@ public class ThirstConfig extends ExtensionConfig {
 	private ItemStack purifiedWaterItem;
 
 	private Set<String> saltyBiomes;
+	private Map<Material, Float> thirstMaterials;
 
 	@Override
 	public void reload(ForceOfNature plugin) {
@@ -35,7 +38,20 @@ public class ThirstConfig extends ExtensionConfig {
 			this.purifiedWaterItem = makeWaterItem(config.getConfigurationSection("purified-water"), 30);
 
 			this.saltyBiomes = new HashSet<>(config.getStringList("salt-water-biomes"));
+
+			loadThirstMaterials(config.getConfigurationSection("thirst-items"));
 		});
+	}
+
+	private void loadThirstMaterials(ConfigurationSection section) {
+		this.thirstMaterials = new HashMap<>();
+		for (String key : section.getKeys(false)) {
+			Material material = Material.matchMaterial(key.toUpperCase());
+			if (material == null)
+				continue;
+
+			thirstMaterials.put(material, (float) section.getDouble(key, 1));
+		}
 	}
 
 	private ItemStack makeWaterItem(ConfigurationSection section, int def) {
@@ -43,7 +59,11 @@ public class ThirstConfig extends ExtensionConfig {
 				.potionColor(section.getString("color"))
 				.persistantData(PluginKeys.THIRST, PersistentDataType.INTEGER, section.getInt("thirst", def))
 				.name(StringUtils.colorize(section.getString("name")))
-				.lore(StringUtils.colorize(section.getString("lore"))).build();
+				.lore(StringUtils.colorize(section.getStringList("lore"))).build();
+	}
+
+	public float getMaterialThirst(Material material) {
+		return this.thirstMaterials.getOrDefault(material, 0f);
 	}
 
 	public boolean isSaltyBiome(Biome biome) {

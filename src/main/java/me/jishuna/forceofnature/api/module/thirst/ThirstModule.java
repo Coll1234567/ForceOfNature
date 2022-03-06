@@ -4,47 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.FluidCollisionMode;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityExhaustionEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.gson.JsonObject;
 
 import me.jishuna.forceofnature.ForceOfNature;
 import me.jishuna.forceofnature.api.GsonHandler;
-import me.jishuna.forceofnature.api.PluginKeys;
 import me.jishuna.forceofnature.api.module.FONModule;
 import me.jishuna.forceofnature.api.player.PlayerManager;
 import me.jishuna.forceofnature.api.player.SurvivalPlayer;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class ThirstModule extends FONModule<ThirstConfig> {
 	public static final String NAME = "thirst";
 	public static final NamespacedKey KEY = new NamespacedKey(JavaPlugin.getPlugin(ForceOfNature.class), NAME);
 
+	private final ThirstEvents events;
 	private List<FurnaceRecipe> recipes;
 
 	public ThirstModule(ForceOfNature plugin, ThirstConfig config) {
 		super(plugin, config);
 
-		addEventHandler(EntityExhaustionEvent.class, this::onExhaustion);
-		addEventHandler(PlayerItemConsumeEvent.class, this::onConsume);
-		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, this::onInteract);
+		this.events = new ThirstEvents(this);
+
+		addEventHandler(EntityExhaustionEvent.class, events::onExhaustion);
+		addEventHandler(PlayerItemConsumeEvent.class, events::onConsume);
+		addEventHandler(PlayerInteractEvent.class, EventPriority.HIGH, events::onInteract);
 	}
 
 	@Override
@@ -71,61 +63,6 @@ public class ThirstModule extends FONModule<ThirstConfig> {
 		recipes.add(freshWaterRecipe);
 	}
 
-	private void onExhaustion(EntityExhaustionEvent event) {
-		HumanEntity entity = event.getEntity();
-
-		if (entity.getExhaustion() + event.getExhaustion() > 4.0) {
-			getSurvivalPlayer(entity.getUniqueId()).ifPresent(player -> {
-				player.getExtension(ThirstExtension.class).ifPresent(extension -> extension.takeThirst(1));
-				entity.getInventory().addItem(this.getConfig().getSaltWaterItem());
-				entity.getInventory().addItem(this.getConfig().getFreshWaterItem());
-				entity.getInventory().addItem(this.getConfig().getPurifiedWaterItem());
-			});
-		}
-	}
-
-	private void onConsume(PlayerItemConsumeEvent event) {
-		ItemStack item = event.getItem();
-		if (!item.hasItemMeta())
-			return;
-
-		PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
-		if (!container.has(PluginKeys.THIRST, PersistentDataType.INTEGER))
-			return;
-
-		int thirst = container.get(PluginKeys.THIRST, PersistentDataType.INTEGER);
-
-		getSurvivalPlayer(event.getPlayer()).ifPresent(player -> player.getExtension(ThirstExtension.class)
-				.ifPresent(extension -> extension.giveThirst(thirst)));
-	}
-
-	private void onInteract(PlayerInteractEvent event) {
-		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK)
-			return;
-
-		ItemStack item = event.getItem();
-		if (item == null || item.getType() != Material.GLASS_BOTTLE)
-			return;
-
-		event.setCancelled(true);
-
-		Player player = event.getPlayer();
-
-		Block target = player.getTargetBlockExact(4, FluidCollisionMode.ALWAYS);
-		if (target == null)
-			return;
-
-		if (target.getType() == Material.WATER) {
-			item.setAmount(item.getAmount() - 1);
-
-			if (this.getConfig().isSaltyBiome(target.getBiome())) {
-				player.getInventory().addItem(this.getConfig().getSaltWaterItem());
-			} else {
-				player.getInventory().addItem(this.getConfig().getFreshWaterItem());
-			}
-		}
-	}
-
 	@Override
 	public NamespacedKey getKey() {
 		return KEY;
@@ -143,13 +80,8 @@ public class ThirstModule extends FONModule<ThirstConfig> {
 
 	@Override
 	public void tick(int tick, PlayerManager manager) {
-		if (tick % 10 == 0) {
-			for (SurvivalPlayer player : manager.getPlayers()) {
-				player.getExtension(ThirstExtension.class).ifPresent(extension -> {
-					player.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
-							new TextComponent("Thirst: " + extension.getThirst()));
-				});
-			}
+		for (SurvivalPlayer player : manager.getPlayers()) {
+			player.getExtension(ThirstExtension.class).ifPresent(extension -> extension.render(player));
 		}
 	}
 }

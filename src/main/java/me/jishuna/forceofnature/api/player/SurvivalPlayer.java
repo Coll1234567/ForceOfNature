@@ -19,8 +19,7 @@ public class SurvivalPlayer {
 	private final Player player;
 	private final ForceOfNature plugin;
 
-	@SuppressWarnings("rawtypes")
-	private final Map<Class<? extends PlayerExtension>, PlayerExtension> extensions = new HashMap<>();
+	private final Map<Class<? extends PlayerExtension>, PlayerExtension<?>> extensions = new HashMap<>();
 
 	public SurvivalPlayer(Player player, ForceOfNature plugin) {
 		this.player = player;
@@ -31,8 +30,9 @@ public class SurvivalPlayer {
 		this.extensions.put(extension.getClass(), extension);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends PlayerExtension<?>> Optional<T> getExtension(Class<T> type) {
-		return Optional.ofNullable(this.extensions.get(type));
+		return (Optional<T>) Optional.ofNullable(this.extensions.get(type));
 	}
 
 	public void save() {

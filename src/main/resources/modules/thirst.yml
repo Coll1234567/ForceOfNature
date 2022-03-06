@@ -1,23 +1,33 @@
 enabled: true
 
 salt-water:
-  thirst: -10
+  thirst: -1
   sickness-chance: 33
   name: '&fBottle of Salt Water'
   color: '112,159,255'
-  lore: '&7Thirst: &c-10'
+  lore: 
+    - '&7Thirst: &c-1'
 fresh-water:
-  thirst: 25
+  thirst: 2
   sickness-chance: 33
   name: '&fBottle of Fresh Water'
   color: '63,118,228'
-  lore: '&7Thirst: &a25'
+  lore: 
+    - '&7Thirst: &a2'
 purified-water:
-  thirst: 30
+  thirst: 3
   sickness-chance: 0
   name: '&fBottle of Purified Water'
   color: '69,173,242'
-  lore: '&7Thirst: &a30'
+  lore: 
+    - '&7Thirst: &a3'
+    
+thirst-items:
+  MILK_BUCKET: 2
+  MELON_SLICE: 1
+  HONEY_BOTTLE: 2
+  BEETROOT_SOUP: 3
+  MUSHROOM_STEW: 3
 
 salt-water-biomes:
   - 'minecraft:ocean'
