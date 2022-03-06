@@ -33,9 +33,9 @@ public class ThirstConfig extends ExtensionConfig {
 		FileUtils.loadResource(plugin, "modules/" + ThirstModule.NAME + ".yml").ifPresent(config -> {
 			loadDefaults(config);
 
-			this.saltWaterItem = makeWaterItem(config.getConfigurationSection("salt-water"), -10);
-			this.freshWaterItem = makeWaterItem(config.getConfigurationSection("fresh-water"), 25);
-			this.purifiedWaterItem = makeWaterItem(config.getConfigurationSection("purified-water"), 30);
+			this.saltWaterItem = makeWaterItem(config.getConfigurationSection("salt-water"), -1, 33);
+			this.freshWaterItem = makeWaterItem(config.getConfigurationSection("fresh-water"), 2, 33);
+			this.purifiedWaterItem = makeWaterItem(config.getConfigurationSection("purified-water"), 3, 0);
 
 			this.saltyBiomes = new HashSet<>(config.getStringList("salt-water-biomes"));
 
@@ -54,10 +54,12 @@ public class ThirstConfig extends ExtensionConfig {
 		}
 	}
 
-	private ItemStack makeWaterItem(ConfigurationSection section, int def) {
+	private ItemStack makeWaterItem(ConfigurationSection section, int defThirst, int defSick) {
 		return new ItemBuilder(Material.POTION).flags(ItemFlag.HIDE_POTION_EFFECTS)
 				.potionColor(section.getString("color"))
-				.persistantData(PluginKeys.THIRST, PersistentDataType.INTEGER, section.getInt("thirst", def))
+				.persistantData(PluginKeys.THIRST, PersistentDataType.INTEGER, section.getInt("thirst", defThirst))
+				.persistantData(PluginKeys.SICK_CHANCE, PersistentDataType.FLOAT,
+						(float) section.getDouble("sickness-chance", defSick))
 				.name(StringUtils.colorize(section.getString("name")))
 				.lore(StringUtils.colorize(section.getStringList("lore"))).build();
 	}

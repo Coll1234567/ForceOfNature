@@ -6,21 +6,28 @@ salt-water:
   name: '&fBottle of Salt Water'
   color: '112,159,255'
   lore: 
-    - '&7Thirst: &c-1'
+    - '&7Makes you thirsty and'
+    - '&7may make you sick.'
+    - '&8&oYou should boil this in a'
+    - '&8&ofurnace before drinking it.'
 fresh-water:
   thirst: 2
   sickness-chance: 33
   name: '&fBottle of Fresh Water'
   color: '63,118,228'
   lore: 
-    - '&7Thirst: &a2'
+    - '&7Restores some thirst, but'
+    - '&7may make you sick.'
+    - '&8&oYou should boil this in a'
+    - '&8&ofurnace before drinking it.'
 purified-water:
   thirst: 3
   sickness-chance: 0
   name: '&fBottle of Purified Water'
   color: '69,173,242'
   lore: 
-    - '&7Thirst: &a3'
+    - '&7Restores some thirst,' 
+    - '&7safe to drink.'
     
 thirst-items:
   MILK_BUCKET: 2
