@@ -2,17 +2,17 @@ package me.jishuna.forceofnature.api.module;
 
 import com.google.gson.JsonObject;
 
-public abstract class PlayerExtension<T extends ExtensionConfig> {
+public abstract class PlayerExtension<T extends FONModule<?>> {
 
-	private T config;
+	private T module;
 
 	public abstract void save(JsonObject json);
 
-	public T getConfig() {
-		return config;
+	public T getModule() {
+		return module;
 	}
 
-	public void setConfig(T config) {
-		this.config = config;
+	public void setModule(T module) {
+		this.module = module;
 	}
 }

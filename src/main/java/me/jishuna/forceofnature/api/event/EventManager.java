@@ -7,6 +7,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import me.jishuna.forceofnature.ForceOfNature;
+import me.jishuna.forceofnature.api.module.FONModule;
 
 public class EventManager {
 	private final ForceOfNature plugin;
@@ -39,6 +40,10 @@ public class EventManager {
 	}
 
 	public <T extends Event> void processEvent(T event, Class<T> eventClass, EventPriority priority) {
-		this.plugin.getModuleRegistry().getModules().forEach(module -> module.handleEvent(eventClass, priority, event));
+		for (FONModule<?> module : plugin.getModuleRegistry().getModules()) {
+			if (!module.getConfig().isEnabled())
+				continue;
+			module.handleEvent(eventClass, priority, event);
+		}
 	}
 }

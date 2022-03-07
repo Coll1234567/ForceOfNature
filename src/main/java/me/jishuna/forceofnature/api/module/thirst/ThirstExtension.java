@@ -13,7 +13,7 @@ import me.jishuna.forceofnature.api.player.SurvivalPlayer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class ThirstExtension extends PlayerExtension<ThirstConfig> {
+public class ThirstExtension extends PlayerExtension<ThirstModule> {
 
 	@Expose
 	private float thirst = 20;

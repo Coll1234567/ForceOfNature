@@ -1,0 +1,46 @@
+default:
+  SPRING:
+    daily-high: 20
+    daily-low: 15
+    nightly-high: 15
+    nightly-low: 10
+  SUMMER:
+    daily-high: 35
+    daily-low: 25
+    nightly-high: 25
+    nightly-low: 15
+  FALL:
+    daily-high: 20
+    daily-low: 15
+    nightly-high: 15
+    nightly-low: 10
+  WINTER:
+    daily-high: 0
+    daily-low: -10
+    nightly-high: -10
+    nightly-low: -20
+    
+biomes:
+  - biome-list:
+    - 'minecraft:forest'
+    - 'minecraft:birch_forest'
+    SPRING:
+      daily-high: 20
+      daily-low: 15
+      nightly-high: 15
+      nightly-low: 10
+    SUMMER:
+      daily-high: 35
+      daily-low: 25
+      nightly-high: 25
+      nightly-low: 15
+    FALL:
+      daily-high: 20
+      daily-low: 15
+      nightly-high: 15
+      nightly-low: 10
+    WINTER:
+      daily-high: 0
+      daily-low: -10
+      nightly-high: -10
+      nightly-low: -20

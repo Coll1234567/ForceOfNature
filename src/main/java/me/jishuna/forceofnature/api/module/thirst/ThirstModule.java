@@ -46,6 +46,10 @@ public class ThirstModule extends FONModule<ThirstConfig> {
 		if (recipes != null) {
 			recipes.forEach(recipe -> Bukkit.removeRecipe(recipe.getKey()));
 		}
+
+		if (!this.getConfig().isEnabled())
+			return;
+
 		recipes = new ArrayList<>();
 
 		ItemStack saltWater = this.getConfig().getSaltWaterItem();
@@ -73,8 +77,7 @@ public class ThirstModule extends FONModule<ThirstConfig> {
 		ThirstExtension extension = GsonHandler.deserialize(json.get(NAME), ThirstExtension.class,
 				ThirstExtension::new);
 
-		extension.setConfig(this.getConfig());
-
+		extension.setModule(this);
 		return extension;
 	}
 

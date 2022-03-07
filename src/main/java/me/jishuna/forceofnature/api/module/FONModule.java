@@ -28,8 +28,6 @@ public abstract class FONModule<T extends ExtensionConfig> {
 	protected FONModule(ForceOfNature plugin, T config) {
 		this.plugin = plugin;
 		this.config = config;
-		
-		this.reload();
 	}
 	
 	public void reload() {

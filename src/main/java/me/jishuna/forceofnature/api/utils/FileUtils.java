@@ -1,4 +1,4 @@
-package me.jishuna.forceofnature.api;
+package me.jishuna.forceofnature.api.utils;
 
 import java.io.File;
 import java.util.Optional;

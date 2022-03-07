@@ -16,12 +16,17 @@ public class ForceOfNature extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		this.eventManager = new EventManager(this);
-		this.moduleRegistry = new ModuleRegistry(this);
+
+		this.moduleRegistry = new ModuleRegistry();
+		this.moduleRegistry.reload();
+
 		this.playerManager = new PlayerManager(this);
 
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
 		new PlayerTickRunnable(this).runTaskTimer(this, 0, 1);
+		new DayChangeRunnable().runTaskTimerAsynchronously(this, 0, 20);
+
 	}
 
 	public ModuleRegistry getModuleRegistry() {

@@ -15,11 +15,11 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import me.jishuna.forceofnature.ForceOfNature;
-import me.jishuna.forceofnature.api.FileUtils;
 import me.jishuna.forceofnature.api.ItemBuilder;
 import me.jishuna.forceofnature.api.PluginKeys;
-import me.jishuna.forceofnature.api.StringUtils;
 import me.jishuna.forceofnature.api.module.ExtensionConfig;
+import me.jishuna.forceofnature.api.utils.FileUtils;
+import me.jishuna.forceofnature.api.utils.StringUtils;
 
 public class ThirstConfig extends ExtensionConfig {
 
@@ -58,8 +58,7 @@ public class ThirstConfig extends ExtensionConfig {
 
 	private ItemStack makeWaterItem(ConfigurationSection section, int defThirst, int defSick) {
 		return new ItemBuilder(Material.POTION).flags(ItemFlag.HIDE_POTION_EFFECTS)
-				.potionData(new PotionData(PotionType.WATER))
-				.potionColor(section.getString("color"))
+				.potionData(new PotionData(PotionType.WATER)).potionColor(section.getString("color"))
 				.persistantData(PluginKeys.THIRST, PersistentDataType.INTEGER, section.getInt("thirst", defThirst))
 				.persistantData(PluginKeys.SICK_CHANCE, PersistentDataType.FLOAT,
 						(float) section.getDouble("sickness-chance", defSick))
