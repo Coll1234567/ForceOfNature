@@ -1,9 +1,12 @@
 package me.jishuna.forceofnature.api.module.temperature;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.gson.JsonObject;
@@ -23,7 +26,7 @@ public class TemperatureModule extends FONModule<TemperatureConfig> {
 	public static final NamespacedKey KEY = new NamespacedKey(JavaPlugin.getPlugin(ForceOfNature.class), NAME);
 
 	private volatile DailyTemperatureData defaultData;
-	private final Map<String, DailyTemperatureData> temperatureData = new HashMap<>();
+	private final Map<String, DailyTemperatureData> temperatureData = new ConcurrentHashMap<>();
 	private final BiomeTemperatureConfig biomeConfig;
 
 	public TemperatureModule(ForceOfNature plugin, TemperatureConfig config) {
@@ -40,7 +43,7 @@ public class TemperatureModule extends FONModule<TemperatureConfig> {
 	public void handleDayChange(long day) {
 		Season current = Season.getSeason(day);
 		Season other;
-		
+
 		int daysElapsed = (int) (day % 20);
 		float progress = daysElapsed / 20f;
 
@@ -68,14 +71,14 @@ public class TemperatureModule extends FONModule<TemperatureConfig> {
 			float progress) {
 		SeasonTemperatureData currentData = data.getSeasonData(current);
 		ThreadLocalRandom random = ThreadLocalRandom.current();
-		
+
 		if (other == null || other == current) {
 			double high = random.nextDouble(currentData.dailyLow(), currentData.dailyHigh());
 			double low = random.nextDouble(currentData.nightlyLow(), currentData.nightlyHigh());
-			
+
 			return new DailyTemperatureData(high, low);
 		}
-		
+
 		SeasonTemperatureData otherData = data.getSeasonData(other);
 
 		double dailyHigh = MathUtils.interpolate(currentData.dailyHigh(), otherData.dailyHigh(), progress);
@@ -87,6 +90,24 @@ public class TemperatureModule extends FONModule<TemperatureConfig> {
 		double low = random.nextDouble(nightlyLow, nightlyHigh);
 
 		return new DailyTemperatureData(high, low);
+	}
+
+	public double getRawTemperature(String key, long time) {
+		DailyTemperatureData data = this.temperatureData.getOrDefault(key, defaultData);
+		return data.getTemperature(time);
+	}
+
+	public double getLocationTemperature(Location location, boolean checkBlocks) {
+		World world = location.getWorld();
+		Biome biome = location.getBlock().getBiome();
+
+		double temp = getRawTemperature(biome.getKey().toString(), world.getTime());
+
+		if (world.getClearWeatherDuration() == 0 && world.getWeatherDuration() > 0) {
+			temp += this.getConfig().getRainModifier();
+		}
+
+		return temp;
 	}
 
 	@Override

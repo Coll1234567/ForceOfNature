@@ -42,14 +42,439 @@
             "height": 9,
             "chars": ["\uE005"]
         },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_bar.png",
+            "ascent": 0,
+            "height": 65,
+            "chars": ["\uE006"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -60,
+            "height": 3,
+            "chars": ["\uE200"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -59,
+            "height": 3,
+            "chars": ["\uE201"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -58,
+            "height": 3,
+            "chars": ["\uE202"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -57,
+            "height": 3,
+            "chars": ["\uE203"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -56,
+            "height": 3,
+            "chars": ["\uE204"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -55,
+            "height": 3,
+            "chars": ["\uE205"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -54,
+            "height": 3,
+            "chars": ["\uE206"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -53,
+            "height": 3,
+            "chars": ["\uE207"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -52,
+            "height": 3,
+            "chars": ["\uE208"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -51,
+            "height": 3,
+            "chars": ["\uE209"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -50,
+            "height": 3,
+            "chars": ["\uE20A"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -49,
+            "height": 3,
+            "chars": ["\uE20B"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -48,
+            "height": 3,
+            "chars": ["\uE20C"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -47,
+            "height": 3,
+            "chars": ["\uE20D"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -46,
+            "height": 3,
+            "chars": ["\uE20E"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -45,
+            "height": 3,
+            "chars": ["\uE20F"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -44,
+            "height": 3,
+            "chars": ["\uE210"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -43,
+            "height": 3,
+            "chars": ["\uE211"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -42,
+            "height": 3,
+            "chars": ["\uE212"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -41,
+            "height": 3,
+            "chars": ["\uE213"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -40,
+            "height": 3,
+            "chars": ["\uE214"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -39,
+            "height": 3,
+            "chars": ["\uE215"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -38,
+            "height": 3,
+            "chars": ["\uE216"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -37,
+            "height": 3,
+            "chars": ["\uE217"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -36,
+            "height": 3,
+            "chars": ["\uE218"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -35,
+            "height": 3,
+            "chars": ["\uE219"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -34,
+            "height": 3,
+            "chars": ["\uE21A"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -33,
+            "height": 3,
+            "chars": ["\uE21B"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -32,
+            "height": 3,
+            "chars": ["\uE21C"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -31,
+            "height": 3,
+            "chars": ["\uE21D"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -30,
+            "height": 3,
+            "chars": ["\uE21E"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -29,
+            "height": 3,
+            "chars": ["\uE21F"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -28,
+            "height": 3,
+            "chars": ["\uE220"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -27,
+            "height": 3,
+            "chars": ["\uE221"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -26,
+            "height": 3,
+            "chars": ["\uE222"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -25,
+            "height": 3,
+            "chars": ["\uE223"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -24,
+            "height": 3,
+            "chars": ["\uE224"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -23,
+            "height": 3,
+            "chars": ["\uE225"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -22,
+            "height": 3,
+            "chars": ["\uE226"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -21,
+            "height": 3,
+            "chars": ["\uE227"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -20,
+            "height": 3,
+            "chars": ["\uE228"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -19,
+            "height": 3,
+            "chars": ["\uE229"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -18,
+            "height": 3,
+            "chars": ["\uE22A"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -17,
+            "height": 3,
+            "chars": ["\uE22B"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -16,
+            "height": 3,
+            "chars": ["\uE22C"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -15,
+            "height": 3,
+            "chars": ["\uE22D"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -14,
+            "height": 3,
+            "chars": ["\uE22E"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -13,
+            "height": 3,
+            "chars": ["\uE22F"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -12,
+            "height": 3,
+            "chars": ["\uE230"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -11,
+            "height": 3,
+            "chars": ["\uE231"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -10,
+            "height": 3,
+            "chars": ["\uE232"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -9,
+            "height": 3,
+            "chars": ["\uE233"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -8,
+            "height": 3,
+            "chars": ["\uE234"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -7,
+            "height": 3,
+            "chars": ["\uE235"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -6,
+            "height": 3,
+            "chars": ["\uE236"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -5,
+            "height": 3,
+            "chars": ["\uE237"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -4,
+            "height": 3,
+            "chars": ["\uE238"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -3,
+            "height": 3,
+            "chars": ["\uE239"]
+        },
+		{
+            "type": "bitmap",
+            "file": "forceofnature:custom/temp_indicator.png",
+            "ascent": -2,
+            "height": 3,
+            "chars": ["\uE23A"]
+        },
         {
             "type": "bitmap",
             "file": "space:font/space_split.png",
             "ascent": -65536,
-            "height": 100,
-            "chars": [
-                "\uF800"
-            ]
+            "height": 113,
+            "chars": ["\uF800"]
+        },
+		{
+            "type": "bitmap",
+            "file": "space:font/space_split.png",
+            "ascent": -65536,
+            "height": -11,
+            "chars": ["\uF801"]
         }
     ]
 }

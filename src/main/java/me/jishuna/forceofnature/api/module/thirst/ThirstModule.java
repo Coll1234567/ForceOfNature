@@ -20,7 +20,6 @@ import me.jishuna.forceofnature.ForceOfNature;
 import me.jishuna.forceofnature.api.GsonHandler;
 import me.jishuna.forceofnature.api.module.FONModule;
 import me.jishuna.forceofnature.api.player.PlayerManager;
-import me.jishuna.forceofnature.api.player.SurvivalPlayer;
 
 public class ThirstModule extends FONModule<ThirstConfig> {
 	public static final String NAME = "thirst";
@@ -83,8 +82,5 @@ public class ThirstModule extends FONModule<ThirstConfig> {
 
 	@Override
 	public void tick(int tick, PlayerManager manager) {
-		for (SurvivalPlayer player : manager.getPlayers()) {
-			player.getExtension(ThirstExtension.class).ifPresent(extension -> extension.render(player));
-		}
 	}
 }

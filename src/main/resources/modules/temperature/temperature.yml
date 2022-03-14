@@ -1,1 +1,7 @@
 enabled: true
+
+# How much to raise/lower the ambient temperature during rain.
+rain-modifier: -2
+
+# Controls the speed at which a players temperature changes to match the ambient temperature, lower numbers mean a faster change.
+change-factor: 20
